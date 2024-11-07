@@ -5,9 +5,10 @@
   "main": "dist/server.js",
   "type": "module",
   "scripts": {
+
     "build": "tsc",
     "seed": "node dist/seeds/seed.js",
-    "start": "node dist/server.js",
+    "start": "node dist/server.js && node dist/seeds/seed.js",
     "watch": "nodemon dist/server.js",
     "test": "vitest"
   },
