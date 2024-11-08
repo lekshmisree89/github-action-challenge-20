@@ -20,11 +20,6 @@ jobs:
         env:
           RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
 
-
-
-
-
-jobs:
     ci:
       runs-on: ubuntu-latest
       steps:
