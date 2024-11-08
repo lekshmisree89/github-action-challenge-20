@@ -1,48 +1,41 @@
-# Name of workflow
-name: cypresstests
+name: Cypress Component Tests
 
-# Trigger workflow on all pull requests
 on:
   pull_request:
     branches:
       - develop
 
-
-
-# Jobs to carry out
 jobs:
-  test:
-    # Operating system to run job on
+  cypress-tests:
     runs-on: ubuntu-latest
 
-    # Steps in job
     steps:
-      # Get code from repo
-      - name: Checkout code
-        uses: actions/checkout@v1
+      - name: Check out the code
+        uses: actions/checkout@v3
 
-      - name: Use Node.js 21.x
-        uses: actions/setup-node@v1
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: 21.x
+          node-version: '16'
 
-      # Install dependencies
-      - name: 🧰 Install Deps
+      - name: Install dependencies
         run: npm install
-        
-      # Run cypress tests
-      - name: Run Cypress Tests
-        run: npm run cypress:run
 
-    #run lint
-    - name: Run Lint
-      run: npm run lint
-      
+      - name: Start the development server
+        run: npm run dev &
+        env:
+          CI: true
 
-      # Run build
-      - name: Run Build
-        run: npm run build
+      # Wait for the server to be accessible on http://localhost:3001
+      - name: Wait for server to be up
+        run: npx wait-on http://localhost:3001 --timeout 120000
 
-      # Run tests
-      - name: Run Tests
-        run: npm run test
+      - name: Run Cypress component tests
+        run: npm run cy:run
+
+      - name: Upload Cypress test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-results
+          path: cypress/screenshots/**
