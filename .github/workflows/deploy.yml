@@ -1,25 +1,16 @@
+#TODO: What is this line of code doing
 name: Deploy
 
+#TODO: What is this block of code doing
 on:
     push:
       branches: [main]
     pull_request:
       branches:
         - main
-       
-
-
-
+        
+#TODO: What is this block of code doing   
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Trigger Render Deployment
-        run: curl -X POST "$RENDER_DEPLOY_HOOK"
-        env:
-          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
-
     ci:
       runs-on: ubuntu-latest
       steps:
@@ -36,4 +27,4 @@ jobs:
             DEPLOY_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
           run: |
             curl "$DEPLOY_URL"
-  
+   
