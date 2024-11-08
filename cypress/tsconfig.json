@@ -11,7 +11,7 @@
       "strict": true,
       "allowImportingTsExtensions": true,
       "rootDir": "../",
-      "baseUrl": "http://localhost:3000",
+      "baseUrl": "http://localhost:3001",
     },
 
     "include": ["**/*.tsx", "**/*.ts", "**/*.js", "**/*.jsx","**/*.json",  "../**/*.ts", "../**/*.tsx", "../**/*.js"]
