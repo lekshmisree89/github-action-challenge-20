@@ -1,29 +1,25 @@
-
-name: Deploy
+name: Cypress Tests
 
 on:
-    push:
-      branches: [main]
-    pull_request:
-      branches:
-        - main
-        
- 
+  pull_request:
+    branches:
+      - develop
 
-    ci:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v3
+jobs:
+  test:
+    runs-on: ubuntu-latest
 
-        - name: Test
-          run: |
-            npm install
-            npm run test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-        - name: Deploy
-          if: github.ref == 'refs/heads/main'
-          env:
-            DEPLOY_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
-          run: |
-            curl "$DEPLOY_URL"
-   
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Cypress tests
+        run: npx cypress run
