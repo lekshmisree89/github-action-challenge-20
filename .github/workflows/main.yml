@@ -1,41 +1,42 @@
-name: Cypress Component Tests
+# Name of workflow
+name: Test workflow
 
+# Trigger workflow on all pull requests
 on:
   pull_request:
     branches:
       - develop
+     
 
+# Jobs to carry out
 jobs:
-  cypress-tests:
+  test:
+    # Operating system to run job on
     runs-on: ubuntu-latest
 
+    # Steps in job
     steps:
-      - name: Check out the code
-        uses: actions/checkout@v3
+      # Get code from repo
+      - name: Checkout code
+        uses: actions/checkout@v1
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - name: Use Node.js 21.x
+        uses: actions/setup-node@v1
         with:
-          node-version: '16'
+          node-version: 21.x
 
-      - name: Install dependencies
+      # Install dependencies
+      - name: 🧰 Install Deps
         run: npm install
+        
+      # Run lint
+      - name: Run Lint
+        run: npm run lint
 
-
-      -name: Build the app
+      # Run build
+      - name: Run Build
         run: npm run build
 
-
-
-      - name: Start the development server
-        run: npm start
-        env:
-          CI: true
-
-      # Wait for the server to be accessible on http://localhost:3001
-
-
-      - name: Run Cypress component tests
-        run: npm run test-component
-
-      
+      # Run tests
+      - name: Run Tests
+        run: npm run cypress:run
