@@ -1,47 +1,48 @@
-name: Cypress Tests
+# Name of workflow
+name: cypress tests
 
+# Trigger workflow on all pull requests
 on:
   pull_request:
     branches:
       - develop
-  push:
-    branches:
-      - main
+  
+  
 
+# Jobs to carry out
 jobs:
-  test:
+  cypress-tests:
     runs-on: ubuntu-latest
-    strategy:
+      strategy:
       matrix:
         node-version: [18.x, 20.x, 22.x]
 
     steps:
-      - name: Check out the code
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
+
+       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
+
       - name: Install dependencies
         run: npm install
 
-      - name: Start the development server
-        run: npm run dev &
-        env:
-          CI: true
+      -name: Start server
+       run: npm start
 
-      - name: Wait for server to be up
+     - name: Wait for server to be up
         run: npx wait-on http://localhost:3001
 
       - name: Run Cypress tests
-        run: npm run cy:run
+        run: npm run cypress:run
 
-      - name: Cypress Results
-        if: always()
-        uses: actions/upload-artifact@v3
+      - name: Upload test results
+        uses: actions/upload-artifact@v2
         with:
-          name: cypress-results-${{ matrix.node-version }}
-          path: cypress/screenshots/**
+          name: cypress-test-results-${{ matrix.node-version }}
+        
