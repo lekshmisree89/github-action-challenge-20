@@ -1,5 +1,5 @@
 # Name of workflow
-name: cypress tests
+name: cypresstests
 
 # Trigger workflow on all pull requests
 on:
@@ -7,6 +7,8 @@ on:
     branches:
       - develop
       - staging
+      - main
+      
 
 # Jobs to carry out
 jobs:
@@ -32,6 +34,10 @@ jobs:
       # Run cypress tests
       - name: Run Cypress Tests
         run: npm run cypress:run
+
+    #run lint
+    - name: Run Lint
+      run: npm run lint
       
 
       # Run build
