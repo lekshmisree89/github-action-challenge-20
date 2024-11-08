@@ -5,20 +5,22 @@ on:
     branches:
       - develop
 
+
 jobs:
   cypress-test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v1
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v1
         with:
-          node-version: 18.x
+          node-version: 21.x
           cache: 'npm'
 
-      - name: Install dependencies
+     # Install dependencies
+      - name: 🧰 Install Deps
         run: npm install
 
       - name: Start development server
@@ -29,5 +31,18 @@ jobs:
       - name: Wait for server to be up
         run: npx wait-on http://localhost:3001
 
+
+   # Run build
+      - name: Run Build
+        run: npm run build
+
+      # Run tests
       - name: Run Cypress tests
         run: npm run cy:run
+
+
+
+
+
+  
+
