@@ -10,9 +10,10 @@
       "jsx": "react-jsx",
       "strict": true,
       "allowImportingTsExtensions": true,
-      "rootDir": "../"
+      "rootDir": "../",
+      "baseUrl": "../",
     },
-    
+
     "include": ["**/*.tsx", "**/*.ts", "**/*.js", "**/*.jsx","**/*.json",  "../**/*.ts", "../**/*.tsx", "../**/*.js"]
   }
   
