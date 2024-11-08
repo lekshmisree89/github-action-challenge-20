@@ -35,6 +35,12 @@ jobs:
       - name: Run Build
         run: npm run build
 
+     - name: Wait for server to be ready
+      run: npx wait-on http://localhost:3001 --timeout 60000  # Increase the timeout to 60 seconds
+
+      -name : Start server
+      run: npm run start
+
       # Run tests
       - name: Run Tests
         run: npm run test
